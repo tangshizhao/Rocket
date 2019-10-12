@@ -1,5 +1,6 @@
 import Foundation
 import PromiseKit
+import Alamofire
 
 public struct Rocket {
     
