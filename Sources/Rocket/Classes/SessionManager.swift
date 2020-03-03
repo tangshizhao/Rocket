@@ -13,6 +13,10 @@ public final class SessionManager {
     
     private var config: Config = Config.default
     
+    private let requestQueue: DispatchQueue = DispatchQueue.global(qos: .userInteractive)
+    private let decodeQueue: DispatchQueue = DispatchQueue.global(qos: .background)
+    private let authorizeQueue: DispatchQueue = DispatchQueue.global(qos: .userInteractive)
+    
     private init() {
         
     }
@@ -22,51 +26,55 @@ public final class SessionManager {
     }
     
     @discardableResult
-    public func request<R: RequestType, P: ResponseType>(
-        _ request: R,
-        decode type: P.Type,
-        on queue: DispatchQueue? = nil
-    ) -> Promise<P> {
-        let decoder = DataDecoder(
-            type: type,
-            jsonDecoder: JSONDecoder(config: config.jsonDecoderConfig)
-        )
+    public func request<P: ResponseType>(_ request: RequestType, decode type: P.Type) -> Promise<P> {
+        let jsonDecoder = JSONDecoder(config: config.jsonDecoderConfig)
+        let decoder = DataDecoder(type: type, jsonDecoder: jsonDecoder)
         return self
-            .request(request, on: queue)
+            .request(request)
+            .then(on: decodeQueue) { decoder.decode($0) }
+    }
+    
+    @discardableResult
+    public func request(_ request: RequestType) -> Promise<Data> {
+        return self
+            .request(request)
             .compactMap { $0.body }
-            .then { decoder.decode($0, on: queue) }
     }
     
     @discardableResult
-    public func request<R: RequestType>(
-        _ request: R,
-        on queue: DispatchQueue? = nil
-    ) -> Promise<HTTPResponse> {
-        return PromiseKit
-            .firstly { Printer.printAsync(request) }
-            .then { _ in RequestSender.send(request, on: queue) }
-            .then { Printer.printAsync($0) }
+    public func request(_ request: RequestType) -> Promise<HTTPResponse> {
+        return RequestSender()
+            .send(request, on: requestQueue)
+            .recover(on: authorizeQueue, recover)
     }
     
-    @discardableResult
-    public func request<R: RequestType>(
-        _ request: R,
-        on queue: DispatchQueue? = nil
-    ) -> Promise<Data> {
-        return PromiseKit
-            .firstly { Printer.printAsync(request) }
-            .then { _ in RequestSender.send(request, on: queue) }
-            .then { Printer.printAsync($0) }
+    private func recover(_ error: Error) -> Promise<HTTPResponse> {
+        guard isUnauthorizedError(error) else {
+            return Promise(error: error)
+        }
+        guard let request = config.unauthorizedConfig?.reauthorizeRequest else {
+            return Promise(error: error)
+        }
+        return RequestSender().send(request, on: authorizeQueue)
     }
     
-    @discardableResult
-    public func request<R: RequestType>(
-        _ request: R,
-        on queue: DispatchQueue? = nil
-    ) -> Promise<String> {
-        return PromiseKit
-            .firstly { Printer.printAsync(request) }
-            .then { _ in RequestSender.send(request, on: queue) }
-            .then { Printer.printAsync($0) }
+    private func isUnauthorizedError(_ error: Error) -> Bool {
+        guard let unauthorizedConfig = config.unauthorizedConfig else {
+            return false
+        }
+        switch error {
+        case let responseError as ResponseError:
+            switch responseError {
+            case .invalid(status: let status):
+                if status == unauthorizedConfig.httpStatus {
+                    return true
+                }
+            default:
+                break
+            }
+        default:
+            break
+        }
+        return false
     }
 }

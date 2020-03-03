@@ -18,7 +18,7 @@ public struct DataDecoder<P: ResponseType> {
         self.jsonDecoder = jsonDecoder
     }
     
-    public func decode(_ data: Data, on queue: DispatchQueue? = nil) -> Promise<P> {
+    public func decode(_ data: Data) -> Promise<P> {
         if let response = data as? P {
             return Promise.value(response)
         }

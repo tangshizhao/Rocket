@@ -7,28 +7,19 @@ public func setup(with config: Config) {
 }
 
 @discardableResult
-public func send<R: RequestType, P: ResponseType>(
-    _ request: R,
-    decode type: P.Type,
-    on queue: DispatchQueue? = nil
-) -> Promise<P> {
-    return SessionManager.shared.request(request, decode: type, on: queue)
-}
-
-
-@discardableResult
-public func send<R: RequestType>(
-    _ request: R,
-    on queue: DispatchQueue? = nil
-) -> Promise<Data> {
-    return SessionManager.shared.request(request, on: queue)
+public func send<P: ResponseType>(_ request: RequestType, decode type: P.Type) -> Promise<P> {
+    return SessionManager.shared.request(request, decode: type)
 }
 
 @discardableResult
-public func send<R: RequestType>(
-    _ request: R,
-    on queue: DispatchQueue? = nil
-) -> Promise<HTTPResponse> {
-    return SessionManager.shared.request(request, on: queue)
+public func send(_ request: RequestType) -> Promise<Data> {
+    return SessionManager.shared.request(request)
 }
+
+@discardableResult
+public func send(_ request: RequestType) -> Promise<HTTPResponse> {
+    return SessionManager.shared.request(request)
+}
+
+
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class Config {
+public struct Config {
     
     public static let `default`: Config = Config()
     

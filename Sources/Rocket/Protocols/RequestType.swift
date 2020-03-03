@@ -2,7 +2,7 @@ import Foundation
 import Alamofire
 
 // MARK: - Protocol
-public protocol RequestType: URLRequestConvertible, URLConvertible, CustomStringConvertible {
+public protocol RequestType: URLConvertible, CustomStringConvertible {
     var host: String { get }
     var uri: String { get }
     var method: HTTPMethod { get }
@@ -11,32 +11,10 @@ public protocol RequestType: URLRequestConvertible, URLConvertible, CustomString
     var parameterEncoding: ParameterEncoding { get }
 }
 
-// MARK: - URLRequestConvertible
-extension RequestType {
-    public func asURLRequest() throws -> URLRequest {
-        let url = try asURL()
-        let riginalRequest = try URLRequest(url: url, method: method, headers: headers)
-        return try parameterEncoding.encode(riginalRequest, with: parameters)
-    }
-}
-
 // MARK: - URLConvertible
 extension RequestType {
     public func asURL() throws -> URL {
         return try (host + uri).asURL()
-    }
-}
-
-// MARK: - CustomStringConvertible
-extension RequestType {
-    public var description: String {
-        return "---------- Request ----------" + "\n"
-            + "URL: \(host)\(uri)" + "\n"
-            + "Method: \(method.rawValue)" + "\n"
-            + "Headers: \(headers ?? [:])" + "\n"
-            + "Parameters: \(parameters ?? [:])" + "\n"
-            + "Parameter Encoding: \(parameterEncoding)" + "\n"
-            + "-----------------------------"
     }
 }
 

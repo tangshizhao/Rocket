@@ -8,7 +8,8 @@
 
 import Foundation
 
-enum ResponseError: Error {
+public enum ResponseError: Error {
     case noResponse
     case timeout
+    case invalid(status: HTTPStatus)
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class UnauthorizationConfig {
+public struct UnauthorizationConfig {
     
     public let httpStatus: HTTPStatus
     public let retryCount: Int

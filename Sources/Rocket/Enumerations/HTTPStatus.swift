@@ -481,3 +481,17 @@ extension HTTPStatus: CustomStringConvertible {
         return "\(code) (\(reasonPhrase))"
     }
 }
+
+extension HTTPStatus: Hashable {
+    public static var successStatus: Set<HTTPStatus> {
+        return [
+            .ok,
+            .created,
+            .accepted,
+            .nonAuthoritativeInformation,
+            .noContent,
+            .resetContent,
+            .partialContent
+        ]
+    }
+}
