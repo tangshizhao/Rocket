@@ -13,6 +13,6 @@ public protocol Identifiable: CustomStringConvertible {
 
 extension Identifiable {
     public var description: String {
-        return "<ID: \(uuid.uuidString), TIME: \(Date())>"
+        return "<ID: \(uuid.uuidString), AT: \(Date())>"
     }
 }

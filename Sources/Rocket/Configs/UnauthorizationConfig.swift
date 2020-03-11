@@ -1,6 +1,6 @@
 //
 //  UnauthorizationConfig.swift
-//  Alamofire
+//  Rocket
 //
 //  Created by 汤世昭 on 2020/3/2.
 //

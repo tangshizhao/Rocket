@@ -1,10 +1,3 @@
-//
-//  DataDecoder.swift
-//  Alamofire
-//
-//  Created by 汤世昭 on 2020/3/2.
-//
-
 import Foundation
 import PromiseKit
 
