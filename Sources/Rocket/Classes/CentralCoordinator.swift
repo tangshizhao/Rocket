@@ -115,6 +115,28 @@ extension CentralCoordinator {
     }
 }
 
+// MARK: - Request Downloader
+extension CentralCoordinator {
+    @discardableResult
+    public func download(_ request: DownloadableRequest) -> Promise<HTTPResponse> {
+        return RequestDownloader(config: self.config)
+            .download(request: request, on: self.requestQueue)
+    }
+    
+    @discardableResult
+    public func download(_ request: DownloadableRequest) -> Promise<URL> {
+        return RequestDownloader(config: self.config)
+            .download(request: request, on: self.requestQueue)
+    }
+    
+    @discardableResult
+    public func download(_ request: DownloadableRequest) -> Promise<Data> {
+        return RequestDownloader(config: self.config)
+            .download(request: request, on: self.requestQueue)
+    }
+}
+
+
 // MARK: - Private Functions
 extension CentralCoordinator {
     private func recover(_ error: Error) -> Promise<HTTPResponse> {

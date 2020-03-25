@@ -2,7 +2,7 @@ import Foundation
 import Alamofire
 
 // MARK: - Protocol
-public protocol RequestType: URLConvertible, CustomStringConvertible {
+public protocol RequestType: URLConvertible {
     var host: String { get }
     var uri: String { get }
     var method: HTTPMethod { get }

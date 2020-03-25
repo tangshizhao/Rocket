@@ -12,4 +12,5 @@ public enum ResponseError: Error {
     case noResponse
     case timeout
     case invalid(status: HTTPStatus)
+    case downloadedUrlMissing
 }
