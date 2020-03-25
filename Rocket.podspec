@@ -11,7 +11,7 @@ Pod::Spec.new do |spec|
   # 名称
   spec.name             = "Rocket"
   # 版本号
-  spec.version          = "1.1.0"
+  spec.version          = "1.2.0"
   # 简述
   spec.summary          = "🚀Rocket is a network framework which can be easily used in iOS project"
   # 兼容的swift版本
@@ -33,7 +33,7 @@ Pod::Spec.new do |spec|
   # 源码地址
   spec.source       = { :git => "https://github.com/tangshizhao/Rocket.git", :tag => "#{spec.version}" }
   # 代码文件
-  spec.source_files  = "Sources", "Sources/**/*.swift"
+  spec.source_files  = "Sources/*.swift", "Sources/*/*.swift"
   # 基础框架
   spec.framework  = "Foundation"
   # 三方依赖

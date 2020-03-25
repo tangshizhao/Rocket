@@ -2,8 +2,8 @@
 //  ViewController.swift
 //  Rocket
 //
-//  Created by 汤世昭 on 03/25/2020.
-//  Copyright (c) 2020 汤世昭. All rights reserved.
+//  Created by tangshizhao@foxmail.com on 03/25/2020.
+//  Copyright (c) 2020 tangshizhao@foxmail.com. All rights reserved.
 //
 
 import UIKit
