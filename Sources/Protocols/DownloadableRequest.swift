@@ -1,5 +1,7 @@
 import Foundation
 
-public protocol DownloadableRequest: RequestType {
+public protocol DownloadableRequest {
+    var urlString: String { get }
     var destination: DownloadRequest.DownloadFileDestination { get }
 }
+

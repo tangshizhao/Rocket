@@ -29,6 +29,15 @@ public struct HTTPRequest: URLRequestConvertible, CustomStringConvertible {
         self.print(by: identifier)
     }
     
+    public init(request: DownloadableRequest, identifier: Identifiable) throws {
+        self.url = try request.urlString.asURL()
+        self.method = .get
+        self.headers = nil
+        self.parameters = nil
+        self.parameterEncoding = URLEncoding.default
+        self.print(by: identifier)
+    }
+    
     private func print(by identifier: Identifiable) {
         Printer.print(self, with: identifier)
     }

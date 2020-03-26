@@ -9,7 +9,7 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (6.13.1):
     - PromiseKit/CorePromise
-  - Rocket (1.1.0):
+  - Rocket (1.2.0):
     - Alamofire
     - PromiseKit
     - SwiftyJSON
@@ -31,7 +31,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
-  Rocket: 7f9a0a0fc9da195fabdb0788e9e8a91328f69464
+  Rocket: d962cadb5a53c2af52a1f1ed381aabc780ca0b1c
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
 PODFILE CHECKSUM: fc6af874edd1e39ba684058186c159c7f049fb35

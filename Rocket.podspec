@@ -11,7 +11,7 @@ Pod::Spec.new do |spec|
   # 名称
   spec.name             = "Rocket"
   # 版本号
-  spec.version          = "1.2.0"
+  spec.version          = "1.2.1"
   # 简述
   spec.summary          = "🚀Rocket is a network framework which can be easily used in iOS project"
   # 兼容的swift版本
